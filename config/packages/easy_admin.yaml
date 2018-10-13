@@ -1,0 +1,48 @@
+easy_admin:
+  entities:
+    Product:
+      class: App\Entity\Product
+      form:
+        fields:
+          - { property: 'name', type: 'text', label: 'Nom' }
+          - { property: 'description', type: 'textarea', label: 'Description' }
+          - { property: 'type', label: 'Type' }
+          - { property: 'image', label: 'Image', base_path: '%app.path.gallery_images%'}
+          - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
+      list:
+        title: "Liste de produits"
+        fields: 
+          - { property: 'name', label: 'Nom' }
+          - { property: 'image', type: 'image', label: 'Image', base_path: '%app.path.gallery_dist%' }
+          - { property: 'price', label: 'Prix', format: '%.2f', type: 'money', type_options: { currency: 'CAD' } }
+          - type
+      new:
+        title: 'Ajouter un produit'
+      edit:
+        title: 'Editer un produit'
+    
+    ProductType:
+      class: App\Entity\ProductType
+      form:
+        fields:
+          - { property: 'name', type: 'text', label: 'Nom' }
+          - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
+      list:
+        title: "Liste de types"
+        fields:
+          - { property: 'name', label: 'Nom' }
+          - { property: 'price', label: 'Prix', type: 'money', type_options: { currency: 'CAD' } }
+          - { property: 'products', label: 'Nombre de produits associés' }
+    
+    GalleryItem:
+      class: App\Entity\GalleryItem
+      form:
+        fields:
+          - { property: 'imageFile', type: 'vich_image', base_path: '%app.path.gallery_images%' }
+          - { property: 'show_online', label: 'Afficher dans la galerie ?', type: 'choice', type_options: { empty_data: true, multiple: false, expanded: true, choices: {'Oui': '1', 'Non': '0'}}}
+      list:
+        title: "Galerie"
+        fields:
+          - { property: 'image', type: 'image', label: 'Image', base_path: '%app.path.gallery_dist%' }
+          - { property: 'show_online', label: 'Afficher dans la galerie ?' , type: 'toggle'}
+          - { property: 'products', label: 'Nombre de produits associés' }
