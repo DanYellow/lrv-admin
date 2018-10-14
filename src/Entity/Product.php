@@ -57,10 +57,9 @@ class Product
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
-     * @Groups({"none"})
+     * @ORM\Column(type="boolean")
      */
-    private $productType;
+    private $enabled = true;
 
     public function getId(): ?int
     {
@@ -139,6 +138,18 @@ class Product
     public function setProductType(?ProductType $productType): self
     {
         $this->productType = $productType;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

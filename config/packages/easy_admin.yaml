@@ -1,4 +1,6 @@
 easy_admin:
+  design:
+    brand_color: '#d82383'
   entities:
     Product:
       class: App\Entity\Product

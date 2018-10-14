@@ -38,7 +38,7 @@ class ProductType
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="productType")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="type")
      */
     private $products;
 
