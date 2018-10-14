@@ -3,9 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ApiResource(
+ *      normalizationContext={"groups"={"layout:read"}},
+ *      denormalizationContext={"groups"={"layout:write"}},
+ * )
  */
 class Product
 {
@@ -13,39 +19,46 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"layout:read", "layout:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $description;
 
     /**
      * @var GalleryItem
      * @ORM\ManyToOne(targetEntity="App\Entity\GalleryItem", inversedBy="products")
+     * @Groups({"layout:read", "layout:write"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $price = 0.0;
 
     /**
      * @var ProductType
-     * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"none"})
      */
     private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
+     * @Groups({"none"})
      */
     private $productType;
 

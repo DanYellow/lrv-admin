@@ -11,9 +11,11 @@ easy_admin:
           - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
       list:
         title: "Liste de produits"
-        fields: 
+        fields:
+          - id
           - { property: 'name', label: 'Nom' }
-          - { property: 'image', type: 'image', label: 'Image', base_path: '%app.path.gallery_dist%' }
+          - { property: 'image.imageFile', type: 'vich_image', base_path: '%app.path.gallery_images%' }
+          - { property: 'image.image', type: 'image', label: 'Image', base_path: '%app.path.gallery_images%' }
           - { property: 'price', label: 'Prix', format: '%.2f', type: 'money', type_options: { currency: 'CAD' } }
           - type
       new:
@@ -31,7 +33,7 @@ easy_admin:
         title: "Liste de types"
         fields:
           - { property: 'name', label: 'Nom' }
-          - { property: 'price', label: 'Prix', type: 'money', type_options: { currency: 'CAD' } }
+          - { property: 'price', label: 'Prix', format: '%.2f', type: 'money', type_options: { currency: 'CAD' } }
           - { property: 'products', label: 'Nombre de produits associés' }
     
     GalleryItem:
