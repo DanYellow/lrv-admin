@@ -6,11 +6,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 use Cocur\Slugify\Slugify;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductTypeRepository")
+ * @ApiResource(
+ *      normalizationContext={"groups"={"layout:read"}},
+ *      denormalizationContext={"groups"={"layout:write"}},
+ * )
  */
 class ProductType
 {
@@ -23,17 +30,20 @@ class ProductType
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $price;
 
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $slug;
 
@@ -41,6 +51,11 @@ class ProductType
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="type")
      */
     private $products;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function __construct()
     {
@@ -124,5 +139,17 @@ class ProductType
     public function getProducts(): Collection
     {
         return $this->products;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

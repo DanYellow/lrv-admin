@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
@@ -18,8 +19,7 @@ class Product
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"layout:read", "layout:write"})
+     * @ORM\Column(type="integer") 
      */
     private $id;
 
@@ -39,6 +39,7 @@ class Product
      * @var GalleryItem
      * @ORM\ManyToOne(targetEntity="App\Entity\GalleryItem", inversedBy="products")
      * @Groups({"layout:read", "layout:write"})
+     * @MaxDepth(2)
      */
     private $image;
 
@@ -52,12 +53,13 @@ class Product
      * @var ProductType
      * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"none"})
+     * @Groups({"layout:read", "layout:write"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"layout:read", "layout:write"})
      */
     private $enabled = true;
 

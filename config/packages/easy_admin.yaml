@@ -1,6 +1,11 @@
 easy_admin:
   design:
     brand_color: '#d82383'
+    menu: 
+      - { entity: 'GalleryItem', label: 'Galerie' }
+      - { entity: 'Product', label: 'Produits', default: true }
+      - { entity: 'ProductType', label: 'Types' }
+
   entities:
     Product:
       class: App\Entity\Product
@@ -14,12 +19,13 @@ easy_admin:
       list:
         title: "Liste de produits"
         fields:
-          - id
           - { property: 'name', label: 'Nom' }
-          - { property: 'image.imageFile', type: 'vich_image', base_path: '%app.path.gallery_images%' }
-          - { property: 'image.image', type: 'image', label: 'Image', base_path: '%app.path.gallery_images%' }
-          - { property: 'price', label: 'Prix', format: '%.2f', type: 'money', type_options: { currency: 'CAD' } }
+          - { property: 'image', base_path: '%app.path.gallery_dist%', template: 'image_viewer.html.twig' }
+          - { property: 'price', label: 'Prix' }
+          - { property: 'enabled', label: 'Afficher en ligne' }
           - type
+        actions:
+          - { name: 'new', label: 'Créer nouveau produit' }
       new:
         title: 'Ajouter un produit'
       edit:
