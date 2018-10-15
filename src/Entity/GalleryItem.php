@@ -26,7 +26,6 @@ class GalleryItem
      */
     private $name;
 
-
     /**
      * @Vich\UploadableField(mapping="gallery_images", fileNameProperty="image")
      */

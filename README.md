@@ -1,6 +1,6 @@
 ## Symfony commands
 - start server: php bin/console server:run
-
+- encode password: php bin/console security:encode-password
 
 {
   products {
@@ -28,13 +28,7 @@ query EnabledProducts {
   }
 }
 
-type ProductType {
-  id: Int
-  name: String
-}
-
-
-query EnabledProducts {
+ {
   products {
     edges {
       node {
@@ -43,7 +37,12 @@ query EnabledProducts {
         description,
         price,
         enabled,
-        type: ProductType
+        type {
+          id,
+          name,
+          slug,
+          description
+        }
       }
     }
   }

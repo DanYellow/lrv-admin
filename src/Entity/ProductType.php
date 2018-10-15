@@ -54,6 +54,7 @@ class ProductType
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"layout:read", "layout:write"})
      */
     private $description;
 

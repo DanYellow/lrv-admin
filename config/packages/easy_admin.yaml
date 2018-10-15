@@ -14,6 +14,7 @@ easy_admin:
           - { property: 'name', type: 'text', label: 'Nom' }
           - { property: 'description', type: 'textarea', label: 'Description' }
           - { property: 'type', label: 'Type' }
+          - { property: 'enabled', label: 'Afficher en ligne ?', type: 'choice', type_options: {choices: {'Non': 0, 'Oui': 1}, placeholder: false, multiple: false, expanded: true} }
           - { property: 'image', label: 'Image', base_path: '%app.path.gallery_images%'}
           - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
       list:
@@ -25,7 +26,7 @@ easy_admin:
           - { property: 'enabled', label: 'Afficher en ligne' }
           - type
         actions:
-          - { name: 'new', label: 'Créer nouveau produit' }
+          - { name: 'new', label: 'Ajouter un produit' }
       new:
         title: 'Ajouter un produit'
       edit:
@@ -36,6 +37,7 @@ easy_admin:
       form:
         fields:
           - { property: 'name', type: 'text', label: 'Nom' }
+          - { property: 'description', type: 'textarea', label: 'Description' }
           - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
       list:
         title: "Liste de types"
@@ -43,16 +45,25 @@ easy_admin:
           - { property: 'name', label: 'Nom' }
           - { property: 'price', label: 'Prix', format: '%.2f', type: 'money', type_options: { currency: 'CAD' } }
           - { property: 'products', label: 'Nombre de produits associés' }
+      actions:
+          - { name: 'new', label: 'Ajouter un type de produit' }
     
     GalleryItem:
       class: App\Entity\GalleryItem
       form:
         fields:
           - { property: 'imageFile', type: 'vich_image', base_path: '%app.path.gallery_images%' }
-          - { property: 'show_online', label: 'Afficher dans la galerie ?', type: 'choice', type_options: { empty_data: true, multiple: false, expanded: true, choices: {'Oui': '1', 'Non': '0'}}}
+          - { property: 'show_online', label: 'Afficher dans la galerie ?', type: 'choice', type_options: { placeholder: false, multiple: false, expanded: true, choices: {'Oui': '1', 'Non': '0'}}}
       list:
         title: "Galerie"
         fields:
           - { property: 'image', type: 'image', label: 'Image', base_path: '%app.path.gallery_dist%' }
+          - 'show_online'
           - { property: 'show_online', label: 'Afficher dans la galerie ?' , type: 'toggle'}
           - { property: 'products', label: 'Nombre de produits associés' }
+      actions:
+          - { name: 'new', label: 'Ajouter une image' }
+      new:
+        title: 'Ajouter une image'
+      edit:
+        title: 'Editer une image'

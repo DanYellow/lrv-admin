@@ -8,7 +8,7 @@ security:
                         password: $2y$12$9SYuIPSyZysCm76ERiRpqeAYAvEmM4K0gXCXm5.L389EXujJzY542
                         roles: 'ROLE_ADMIN'
                     admin:
-                        password: installgentoo
+                        password: $2y$12$vQ9cXDoZF4roF9Q0YLmsW.5T833bCq0igBXcLIKtp8Ljzsapbu7GG
                         roles: 'ROLE_ADMIN'
     encoders:
         Symfony\Component\Security\Core\User\User:
@@ -21,6 +21,10 @@ security:
         main:
             anonymous: ~
             http_basic: ~
+
+            logout:
+                path: /logout
+                target: /
 
             # activate different ways to authenticate
 
