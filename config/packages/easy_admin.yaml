@@ -15,7 +15,7 @@ easy_admin:
           - { property: 'description', type: 'textarea', label: 'Description' }
           - { property: 'type', label: 'Type' }
           - { property: 'enabled', label: 'Afficher en ligne ?', type: 'choice', type_options: {choices: {'Non': 0, 'Oui': 1}, placeholder: false, multiple: false, expanded: true} }
-          - { property: 'image', label: 'Image', base_path: '%app.path.gallery_images%'}
+          - { property: 'image', label: 'Image', type: 'gallery', base_path: '%app.path.gallery_images%'}
           - { property: 'price', format: '%.2f', type: 'money', label: 'Prix', type_options: { currency: 'CAD' } }
       list:
         title: "Liste de produits"

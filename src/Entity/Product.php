@@ -3,7 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
@@ -11,15 +16,18 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ApiResource(
  *      normalizationContext={"groups"={"layout:read"}},
- *      denormalizationContext={"groups"={"layout:write"}},
+ *      denormalizationContext={"groups"={"layout:write"}}
  * )
+ * @ApiFilter(PropertyFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={"enabled": "exact", "type.slug": "exact"})
  */
 class Product
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer") 
+     * @ORM\Column(type="integer")
+     * @Groups({"layout:read", "layout:write"}) 
      */
     private $id;
 
