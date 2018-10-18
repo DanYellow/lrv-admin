@@ -2,15 +2,28 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+
+use Symfony\Component\Serializer\Annotation\Groups;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\GalleryItemRepository")
  * @Vich\Uploadable
+ * @ApiResource(
+ *     graphql={
+ *         "query"={"normalization_context"={"groups"={"query"}}}
+ *     }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"enabled": "exact", "type.slug": "exact"})
  */
 class GalleryItem
 {
@@ -23,6 +36,7 @@ class GalleryItem
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"query"})
      */
     private $name;
 
@@ -34,6 +48,7 @@ class GalleryItem
     /**
      * @var bool
      * @ORM\Column(type="boolean")
+     * @Groups({"query"})
      */
     private $showOnline = true;
 
@@ -49,6 +64,7 @@ class GalleryItem
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"query"})
      */
     private $image;
 

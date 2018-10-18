@@ -15,8 +15,9 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ApiResource(
- *      normalizationContext={"groups"={"layout:read"}},
- *      denormalizationContext={"groups"={"layout:write"}}
+ *      graphql={
+ *         "query"={"normalization_context"={"groups"={"query"}}}
+ *      }
  * )
  * @ApiFilter(PropertyFilter::class)
  * @ApiFilter(SearchFilter::class, properties={"enabled": "exact", "type.slug": "exact"})
@@ -27,47 +28,46 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"layout:read", "layout:write"}) 
+     * @Groups({"query"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $description;
 
     /**
      * @var GalleryItem
      * @ORM\ManyToOne(targetEntity="App\Entity\GalleryItem", inversedBy="products")
-     * @Groups({"layout:read", "layout:write"})
-     * @MaxDepth(2)
+     * @Groups({"query"})
      */
     private $image;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $price = 0.0;
 
     /**
      * @var ProductType
      * @ORM\ManyToOne(targetEntity="App\Entity\ProductType", inversedBy="products")
+     * @Groups({"query"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"layout:read", "layout:write"})
      */
     private $type;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $enabled = true;
 

@@ -15,8 +15,9 @@ use Cocur\Slugify\Slugify;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductTypeRepository")
  * @ApiResource(
- *      normalizationContext={"groups"={"layout:read"}},
- *      denormalizationContext={"groups"={"layout:write"}},
+ *     graphql={
+ *         "query"={"normalization_context"={"groups"={"query"}}}
+ *     }
  * )
  */
 class ProductType
@@ -30,20 +31,20 @@ class ProductType
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $price;
 
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $slug;
 
@@ -54,7 +55,7 @@ class ProductType
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"layout:read", "layout:write"})
+     * @Groups({"query"})
      */
     private $description;
 
