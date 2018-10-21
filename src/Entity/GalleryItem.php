@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *         "query"={"normalization_context"={"groups"={"query"}}}
  *     }
  * )
- * @ApiFilter(SearchFilter::class, properties={"enabled": "exact", "type.slug": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"showOnline": "exact"})
  */
 class GalleryItem
 {
@@ -31,17 +32,14 @@ class GalleryItem
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"query"})
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"query"})
-     */
-    private $name;
 
     /**
      * @Vich\UploadableField(mapping="gallery_images", fileNameProperty="image")
+     * @var File
      */
     private $imageFile;
 
@@ -53,12 +51,14 @@ class GalleryItem
     private $showOnline = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="image")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="image", cascade={"merge", "persist"}, orphanRemoval=false)
+     * @Groups({"query"})
      */
     private $products;
 
     /**
      * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
     private $updatedAt = null;
 
@@ -77,18 +77,6 @@ class GalleryItem
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getShowOnline(): ?bool
@@ -136,14 +124,10 @@ class GalleryItem
 
     public function setImageFile(File $image = null)
     {
+        
         $this->imageFile = $image;
         if ($image) {
             $this->updatedAt = new \DateTime('now');
-            
-            if(!isset($this->name)) {
-                $fileName = md5(uniqid()) . '.' . $image->guessExtension();
-                $this->name = $fileName;
-            }
         }
     }
 
@@ -177,6 +161,6 @@ class GalleryItem
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->image;
     }
 }

@@ -2,19 +2,21 @@
 
 namespace App\Form\Type;
 
+use App\Entity\GalleryItem;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class GalleryType extends AbstractType 
 {
-    public function configureOptions(OptionsResolver $resolver)
-    {
-
-    }
-
-    public function getParent()
-    {
-        return EntityType::class;
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+        $builder->add('image', EntityType::class, array(
+            'class' => GalleryItem::class,
+            'choice_label' => function ($category) {
+                return $category->getImage();
+            }
+        ));
     }
 }

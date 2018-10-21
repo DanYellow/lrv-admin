@@ -1,3 +1,6 @@
 {% block gallery_widget %}
-    <p>Hello</p>
+{# {{ form.image}} #}
+    {# {{ dump(form.image.vars.choices|json_encode()) }} #}
+    {{ form_widget(form.image)}}
+    {# <select {{ block('widget_attributes') }}></select> #}
 {% endblock %}

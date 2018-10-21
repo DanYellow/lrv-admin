@@ -1,6 +1,7 @@
 ## Symfony commands
 - start server: php bin/console server:run
 - encode password: php bin/console security:encode-password
+- clear cache: php bin/console cache:clear
 
 {
   products {
